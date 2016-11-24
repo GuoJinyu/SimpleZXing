@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SimpleZXingDemo</string>
+    <string name="scan">Scan</string>
+    <string name="hint">You must agree with the camera permission request then you can use the code scan function</string>
+</resources>

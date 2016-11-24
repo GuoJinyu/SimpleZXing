@@ -1,0 +1,4 @@
+<!-- modified by Guo Jinyu -->
+<resources>
+    <string name="msg_camera_framework_bug">Sorry, the Android camera encountered a problem. Have you given the camera permission to the APP? Or you may need to restart the device.</string>
+</resources>
