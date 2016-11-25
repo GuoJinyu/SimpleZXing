@@ -23,6 +23,7 @@ And if succeeded, it will return a string which the 1D/2D barcode code means.
 ## Typical use
 * For example: MainActivity.java in demo.  
 * Notice: Because of camera use, you should handle the dynamic permission management on Android 6.0 properly just like below.  
+
 ```java
 package com.acker.simplezxing.demo;
 
