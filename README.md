@@ -8,7 +8,7 @@ In most case, This library can be easily used by just two steps:
     compile 'com.acker:simplezxing:1.0'
 ```  
 
->2. invoke it  
+2. invoke it  
 ```java
     startActivityForResult(new Intent(YourActivity.this, CaptureActivity.class), CaptureActivity.REQ_CODE)
 ```  
