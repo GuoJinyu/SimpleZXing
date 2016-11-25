@@ -2,12 +2,11 @@
 A simple and easy to use 1D/2D barcode scanner library on Android. This library is a simplified and improved version of offical [ZXing Android APP(Barcode Scanner)](https://github.com/zxing/zxing).
 
 ## How to use
-In most case, This library can be easily used by just two steps:  
+In most cases, this library can be easily used by just two steps:  
 1. add dependencies  
 ```gradle
     compile 'com.acker:simplezxing:1.0'
 ```  
-
 2. invoke it  
 ```java
     startActivityForResult(new Intent(YourActivity.this, CaptureActivity.class), CaptureActivity.REQ_CODE)
