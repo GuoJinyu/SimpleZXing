@@ -3,11 +3,12 @@ A simple and easy to use 1D/2D barcode scanner library on Android. This library 
 
 ## How to use
 In most case, This library can be easily used by just two steps:  
-1. add dependencies  
+>1. add dependencies  
 ```gradle
     compile 'com.acker:simplezxing:1.0'
 ```  
-2. invoke it  
+
+>2. invoke it  
 ```java
     startActivityForResult(new Intent(YourActivity.this, CaptureActivity.class), CaptureActivity.REQ_CODE)
 ```  
