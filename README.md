@@ -7,14 +7,14 @@ In most cases, this library can be easily used by just two steps:
 1. add dependencies  
 ```gradle
     compile 'com.acker:simplezxing:1.0'
-```  
+```
 
 2. invoke it  
 ```java
     startActivityForResult(new Intent(YourActivity.this, CaptureActivity.class), CaptureActivity.REQ_CODE)
 ```  
 
-And if succeed, it will return a string which the 1D/2D barcode code means.
+And if succeeded, it will return a string which the 1D/2D barcode code means.
 
 ## Function supported
 * Supported formats type: same with the ZXing library.  
