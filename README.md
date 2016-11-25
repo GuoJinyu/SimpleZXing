@@ -3,11 +3,11 @@ A simple and easy to use 1D/2D barcode scanner library on Android. This library 
 
 ## How to use
 In most case, This library can be easily used by just two steps:  
->-1. add dependencies  
+>1. add dependencies  
 ```gradle
     compile 'com.acker:simplezxing:1.0'
 ```  
->-2. invoke it  
+>2. invoke it  
 ```java
     startActivityForResult(new Intent(YourActivity.this, CaptureActivity.class), CaptureActivity.REQ_CODE)
 ```  
@@ -18,8 +18,8 @@ And if succeed, it will return a string which the 1D/2D barcode code means.
 >- Supported camera settings: Beep or not(default yes), Vibrate or not(default yes), Expose or not(default no), Flashlight mode: on/off/auto(default off), Screen Orientation mode: portrait/landscape/auto rotate(default portrait).
 
 ## Typical use
-For example: MainActivity.java in demo.  
-Notice: Because of camera use, you should handle the dynamic permission management on Android 6.0 properly just like below.
+>- For example: MainActivity.java in demo.  
+>- Notice: Because of camera use, you should handle the dynamic permission management on Android 6.0 properly just like below.
 ```java
 package com.acker.simplezxing.demo;
 
