@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+version = "1.0"
+group = "com.acker"
 
 android {
     compileSdkVersion 25
@@ -8,10 +10,23 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0"
+        versionName version
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
+
+ext {
+    PUBLISH_GROUP_ID = group
+    PUBLISH_ARTIFACT_ID = 'simplezxing'
+    PUBLISH_VERSION = version
+}
+
+apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
