@@ -16,6 +16,7 @@
 package com.acker.simplezxing.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -23,6 +24,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.OrientationEventListener;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -85,6 +88,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     private boolean hasSurface;
     private BeepManager beepManager;
     private AmbientLightManager ambientLightManager;
+    private MyOrientationDetector myOrientationDetector;
 
     ViewfinderView getViewfinderView() {
         return viewfinderView;
@@ -104,6 +108,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         windowSetting();
         setContentView(R.layout.capture);
         bundleSetting(getIntent().getBundleExtra(EXTRA_SETTING_BUNDLE));
+        myOrientationDetector = new MyOrientationDetector(this);
+        myOrientationDetector.setLastOrientation(getWindowManager().getDefaultDisplay().getRotation());
     }
 
     private void windowSetting() {
@@ -140,6 +146,9 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             case VALUE_ORIENTATION_PORTRAIT:
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 break;
+            default:
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                break;
         }
         switch (flashlightMode) {
             case VALUE_FLASHLIGHT_AUTO:
@@ -152,7 +161,10 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     @Override
     protected void onResume() {
         super.onResume();
-        cameraManager = new CameraManager(getApplication(),needExposure);
+        if (orientationMode == VALUE_ORIENTATION_AUTO) {
+            myOrientationDetector.enable();
+        }
+        cameraManager = new CameraManager(getApplication(), needExposure);
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
         viewfinderView.setCameraManager(cameraManager);
         handler = null;
@@ -175,6 +187,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     @Override
     protected void onPause() {
+        myOrientationDetector.disable();
         if (handler != null) {
             handler.quitSynchronously();
             handler = null;
@@ -266,5 +279,51 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     private void returnResult(int resultCode, String resultStr) {
         setResult(resultCode, new Intent().putExtra(EXTRA_SCAN_RESULT, resultStr));
         finish();
+    }
+
+    private void restartActivity() {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
+
+    private class MyOrientationDetector extends OrientationEventListener {
+
+        private int lastOrientation = -1;
+
+        MyOrientationDetector(Context context) {
+            super(context);
+        }
+
+        void setLastOrientation(int rotation) {
+            switch (rotation) {
+                case Surface.ROTATION_90:
+                    lastOrientation = 270;
+                    break;
+                case Surface.ROTATION_270:
+                    lastOrientation = 90;
+                    break;
+                default:
+                    lastOrientation = -1;
+            }
+        }
+
+        @Override
+        public void onOrientationChanged(int orientation) {
+            Log.d(TAG, "orientation:" + orientation);
+            if (orientation > 45 && orientation < 135) {
+                orientation = 90;
+            } else if (orientation > 225 && orientation < 315) {
+                orientation = 270;
+            } else {
+                orientation = -1;
+            }
+            if ((orientation == 90 && lastOrientation == 270) || (orientation == 270 && lastOrientation == 90)) {
+                Log.i(TAG, "orientation:" + orientation + "lastOrientation:" + lastOrientation);
+                restartActivity();
+                lastOrientation = orientation;
+                Log.i(TAG, "SUCCESS");
+            }
+        }
     }
 }

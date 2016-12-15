@@ -94,8 +94,7 @@ final class CameraConfigurationManager {
             Log.i(TAG, "Front camera overriden to: " + cwRotationFromNaturalToCamera);
         }
 
-        cwRotationFromDisplayToCamera =
-                (360 + cwRotationFromNaturalToCamera - cwRotationFromNaturalToDisplay) % 360;
+        cwRotationFromDisplayToCamera = (360 + cwRotationFromNaturalToCamera - cwRotationFromNaturalToDisplay) % 360;
         Log.i(TAG, "Final display orientation: " + cwRotationFromDisplayToCamera);
         int cwNeededRotation;
         if (camera.getFacing() == CameraFacing.FRONT) {
@@ -114,17 +113,6 @@ final class CameraConfigurationManager {
         Log.i(TAG, "Camera resolution: " + cameraResolution);
         bestPreviewSize = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, screenResolution);
         Log.i(TAG, "Best available preview size: " + bestPreviewSize);
-
-        boolean isScreenPortrait = screenResolution.x < screenResolution.y;
-        boolean isPreviewSizePortrait = bestPreviewSize.x < bestPreviewSize.y;
-
-        Point previewSizeOnScreen;
-        if (isScreenPortrait == isPreviewSizePortrait) {
-            previewSizeOnScreen = bestPreviewSize;
-        } else {
-            previewSizeOnScreen = new Point(bestPreviewSize.y, bestPreviewSize.x);
-        }
-        Log.i(TAG, "Preview size on screen: " + previewSizeOnScreen);
     }
 
     void setDesiredCameraParameters(OpenCamera camera, boolean safeMode) {
