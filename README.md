@@ -6,7 +6,7 @@ In most cases, this library can be easily used by just two steps:
 
 * 1. add dependencies  
 ```gradle
-    compile 'com.acker:simplezxing:1.0'
+    compile 'com.acker:simplezxing:1.2'
 ```
 
 * 2. invoke it  
