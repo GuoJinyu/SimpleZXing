@@ -15,3 +15,6 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keepclassmembers class com.acker.simplezxing.activity.CaptureActivity {
+    public static final <fields>;
+}
