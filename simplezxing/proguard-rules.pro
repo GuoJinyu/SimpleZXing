@@ -15,6 +15,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+#-libraryjars ./libs/zxing-core-3.3.0.jar
 -keepclassmembers class com.acker.simplezxing.activity.CaptureActivity {
     public static final <fields>;
 }

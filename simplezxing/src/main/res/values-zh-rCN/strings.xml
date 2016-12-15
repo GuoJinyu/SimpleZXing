@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <resources>
-  <string name="msg_camera_framework_bug">很遗憾，Android 相机出现问题。您是否已经授予了本APP相机权限，若仍然有问题，您可能需要重启设备。</string>
+    <string name="msg_camera_framework_bug">很遗憾，Android 相机出现问题。您是否已经授予了本APP相机权限，若仍然有问题，您可能需要重启设备。</string>
 </resources>

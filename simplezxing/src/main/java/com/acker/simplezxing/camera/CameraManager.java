@@ -66,8 +66,8 @@ public final class CameraManager {
     private int requestedFramingRectWidth;
     private int requestedFramingRectHeight;
 
-    public CameraManager(Context context,boolean needExposure) {
-        this.configManager = new CameraConfigurationManager(context,needExposure);
+    public CameraManager(Context context, boolean needExposure) {
+        this.configManager = new CameraConfigurationManager(context, needExposure);
         previewCallback = new PreviewCallback(configManager);
     }
 
@@ -266,7 +266,7 @@ public final class CameraManager {
                 // Called early, before init even finished
                 return null;
             }
-            if(screenResolution.x < screenResolution.y){
+            if (screenResolution.x < screenResolution.y) {
                 // portrait
                 rect.left = rect.left * cameraResolution.y / screenResolution.x;
                 rect.right = rect.right * cameraResolution.y / screenResolution.x;
@@ -279,7 +279,7 @@ public final class CameraManager {
                 rect.top = rect.top * cameraResolution.y / screenResolution.y;
                 rect.bottom = rect.bottom * cameraResolution.y / screenResolution.y;
             }
-            framingRectInPreview = rect ;
+            framingRectInPreview = rect;
 
         }
         return framingRectInPreview;
