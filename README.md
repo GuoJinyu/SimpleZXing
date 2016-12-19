@@ -1,8 +1,10 @@
 # SimpleZXing
 A simple and easy to use 1D/2D barcode scanner library on Android. This library is a simplified and improved version of offical [ZXing Android APP(Barcode Scanner)](https://github.com/zxing/zxing).
 
-## How to use
-*如果你是中文读者，请参考[Android二维码扫描的简单实现及源码分析](http://guojinyu.github.io/2016/12/07/Android二维码扫描的简单实现及源码分析/)*
+## How to use  
+
+*如果你是中文读者，请参考[Android二维码扫描的简单实现及源码分析](http://guojinyu.github.io/2016/12/07/Android二维码扫描的简单实现及源码分析/)*  
+
 In most cases, this library can be easily used by just two steps:  
 
 * 1. add dependencies  
