@@ -315,7 +315,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
         @Override
         public void onOrientationChanged(int orientation) {
-            Log.d(TAG, "orientation:" + orientation);
+            //Log.d(TAG, "orientation:" + orientation);
             if (orientation > 45 && orientation < 135) {
                 orientation = 90;
             } else if (orientation > 225 && orientation < 315) {
@@ -324,10 +324,10 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                 orientation = -1;
             }
             if ((orientation == 90 && lastOrientation == 270) || (orientation == 270 && lastOrientation == 90)) {
-                Log.i(TAG, "orientation:" + orientation + "lastOrientation:" + lastOrientation);
+                //Log.i(TAG, "orientation:" + orientation + "lastOrientation:" + lastOrientation);
                 restartActivity();
                 lastOrientation = orientation;
-                Log.i(TAG, "SUCCESS");
+                //Log.i(TAG, "SUCCESS");
             }
         }
     }
