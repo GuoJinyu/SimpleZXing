@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
 }
 
 ```
-##Effect
+##Effect  
+
 ![Scanner UI][1]
 [1]: http://obc3atr48.bkt.clouddn.com/new%20image%20-%20vtj52.jpg
