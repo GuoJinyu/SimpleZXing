@@ -18,7 +18,6 @@ package com.acker.simplezxing.camera;
 import android.content.Context;
 import android.graphics.Point;
 import android.hardware.Camera;
-import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
@@ -103,7 +102,7 @@ final class CameraConfigurationManager {
         } else {
             cwNeededRotation = cwRotationFromDisplayToCamera;
         }
-        Log.i(TAG, "Clockwise rotation from display to camera: " + cwNeededRotation);
+        //Log.i(TAG, "Clockwise rotation from display to camera: " + cwNeededRotation);
 
         Point theScreenResolution = new Point();
         display.getSize(theScreenResolution);
@@ -119,13 +118,13 @@ final class CameraConfigurationManager {
         Camera theCamera = camera.getCamera();
         Camera.Parameters parameters = theCamera.getParameters();
         if (parameters == null) {
-            Log.w(TAG, "Device error: no camera parameters are available. Proceeding without configuration.");
+            //Log.w(TAG, "Device error: no camera parameters are available. Proceeding without configuration.");
             return;
         }
-        Log.i(TAG, "Initial camera parameters: " + parameters.flatten());
+        //Log.i(TAG, "Initial camera parameters: " + parameters.flatten());
 
         if (safeMode) {
-            Log.w(TAG, "In camera config safe mode -- most settings will not be honored");
+            //Log.w(TAG, "In camera config safe mode -- most settings will not be honored");
         }
         initializeTorch(parameters, safeMode);
         CameraConfigurationUtils.setFocus(
@@ -145,8 +144,8 @@ final class CameraConfigurationManager {
         Camera.Parameters afterParameters = theCamera.getParameters();
         Camera.Size afterSize = afterParameters.getPreviewSize();
         if (afterSize != null && (bestPreviewSize.x != afterSize.width || bestPreviewSize.y != afterSize.height)) {
-            Log.w(TAG, "Camera said it supported preview size " + bestPreviewSize.x + 'x' + bestPreviewSize.y +
-                    ", but after setting it, preview size is " + afterSize.width + 'x' + afterSize.height);
+            //Log.w(TAG, "Camera said it supported preview size " + bestPreviewSize.x + 'x' + bestPreviewSize.y +
+            //        ", but after setting it, preview size is " + afterSize.width + 'x' + afterSize.height);
             bestPreviewSize.x = afterSize.width;
             bestPreviewSize.y = afterSize.height;
         }

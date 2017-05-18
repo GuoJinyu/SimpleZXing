@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resources>
+    <string name="app_name">SimpleZXingDemo</string>
+    <string name="scan">扫一扫</string>
+    <string name="hint">您必须赋予APP摄像头权限，才能正常使用条码扫描功能</string>
+</resources>

@@ -17,7 +17,6 @@ package com.acker.simplezxing.decode;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import com.acker.simplezxing.activity.CaptureActivity;
 import com.google.zxing.BarcodeFormat;
@@ -61,7 +60,7 @@ public final class DecodeThread extends Thread {
         decodeFormats.addAll(DecodeFormatManager.PDF417_FORMATS);
         hints.put(DecodeHintType.POSSIBLE_FORMATS, decodeFormats);
         hints.put(DecodeHintType.NEED_RESULT_POINT_CALLBACK, resultPointCallback);
-        Log.i("DecodeThread", "Hints: " + hints);
+        //Log.i("DecodeThread", "Hints: " + hints);
     }
 
     public Handler getHandler() {

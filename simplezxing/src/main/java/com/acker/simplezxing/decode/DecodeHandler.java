@@ -18,7 +18,6 @@ package com.acker.simplezxing.decode;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 
 import com.acker.simplezxing.R;
 import com.acker.simplezxing.activity.CaptureActivity;
@@ -99,9 +98,9 @@ final class DecodeHandler extends Handler {
         }
         Handler handler = activity.getHandler();
         if (rawResult != null) {
-            // Don't log the barcode contents for security.
+            // Don't Log the barcode contents for security.
             long end = System.currentTimeMillis();
-            Log.d(TAG, "Found barcode in " + (end - start) + " ms");
+            //Log.d(TAG, "Found barcode in " + (end - start) + " ms");
             if (handler != null) {
                 Message message = Message.obtain(handler, R.id.decode_succeeded, rawResult);
                 message.sendToTarget();

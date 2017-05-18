@@ -21,7 +21,6 @@ import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Vibrator;
-import android.util.Log;
 
 import com.acker.simplezxing.R;
 
@@ -101,7 +100,7 @@ public final class BeepManager implements Closeable {
             mediaPlayer.prepare();
             return mediaPlayer;
         } catch (IOException ioe) {
-            Log.w(TAG, ioe);
+            //Log.w(TAG, ioe);
             mediaPlayer.release();
             return null;
         }

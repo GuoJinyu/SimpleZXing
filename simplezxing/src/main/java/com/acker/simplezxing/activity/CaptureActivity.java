@@ -23,7 +23,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -214,7 +213,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         if (holder == null) {
-            Log.e(TAG, "*** WARNING *** surfaceCreated() gave us a null surface!");
+            //Log.e(TAG, "*** WARNING *** surfaceCreated() gave us a null surface!");
         }
         if (!hasSurface) {
             hasSurface = true;
@@ -257,7 +256,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             throw new IllegalStateException("No SurfaceHolder provided");
         }
         if (cameraManager.isOpen()) {
-            Log.w(TAG, "initCamera() while already open -- late SurfaceView callback?");
+            //Log.w(TAG, "initCamera() while already open -- late SurfaceView callback?");
             return;
         }
         try {
@@ -267,7 +266,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                 handler = new CaptureActivityHandler(this, cameraManager);
             }
         } catch (Exception e) {
-            Log.w(TAG, e);
+            //Log.w(TAG, e);
             returnResult(RESULT_CANCELED, getString(R.string.msg_camera_framework_bug));
         }
     }
