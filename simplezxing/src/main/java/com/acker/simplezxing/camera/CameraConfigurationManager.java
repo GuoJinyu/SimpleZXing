@@ -139,6 +139,10 @@ final class CameraConfigurationManager {
             CameraConfigurationUtils.setMetering(parameters);
         }
         parameters.setPreviewSize(bestPreviewSize.x, bestPreviewSize.y);
+        //设置放大倍数
+        if (parameters.isZoomSupported()) {
+            parameters.setZoom(parameters.getMaxZoom() / 10);
+        }
         theCamera.setParameters(parameters);
         theCamera.setDisplayOrientation(cwRotationFromDisplayToCamera);
         Camera.Parameters afterParameters = theCamera.getParameters();

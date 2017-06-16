@@ -73,14 +73,22 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     public static final byte VALUE_ORIENTATION_AUTO = 2;
     public static final byte VALUE_ORIENTATION_LANDSCAPE = 1;
     public static final byte VALUE_ORIENTATION_PORTRAIT = 0; //default
+    public static final String KEY_SCAN_AREA_FULL_SCREEN = "SCAN_AREA_FULL_SCREEN";
+    public static final boolean VALUE_SCAN_AREA_FULL_SCREEN = true;
+    public static final boolean VALUE_SCAN_AREA_VIEW_FINDER = false;
     public static final String EXTRA_SETTING_BUNDLE = "SETTING_BUNDLE";
     public static final String EXTRA_SCAN_RESULT = "SCAN_RESULT";
+    public static final String KEY_NEED_SCAN_HINT_TEXT = "KEY_NEED_SCAN_HINT_TEXT";
+    public static final boolean VALUE_SCAN_HINT_TEXT = true;
+    public static final boolean VALUE_NO_SCAN_HINT_TEXT = false;
     private static final String TAG = CaptureActivity.class.getSimpleName();
     byte flashlightMode;
     byte orientationMode;
     boolean needBeep;
     boolean needVibration;
     boolean needExposure;
+    boolean needFullScreen;
+    boolean needScanHintText;
     private CameraManager cameraManager;
     private CaptureActivityHandler handler;
     private ViewfinderView viewfinderView;
@@ -138,6 +146,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         needBeep = bundle.getBoolean(KEY_NEED_BEEP, VALUE_BEEP);
         needVibration = bundle.getBoolean(KEY_NEED_VIBRATION, VALUE_VIBRATION);
         needExposure = bundle.getBoolean(KEY_NEED_EXPOSURE, VALUE_NO_EXPOSURE);
+        needFullScreen = bundle.getBoolean(KEY_SCAN_AREA_FULL_SCREEN, VALUE_SCAN_AREA_VIEW_FINDER);
+        needScanHintText = bundle.getBoolean(KEY_NEED_SCAN_HINT_TEXT, VALUE_NO_SCAN_HINT_TEXT);
         switch (orientationMode) {
             case VALUE_ORIENTATION_LANDSCAPE:
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -163,9 +173,10 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         if (orientationMode == VALUE_ORIENTATION_AUTO) {
             myOrientationDetector.enable();
         }
-        cameraManager = new CameraManager(getApplication(), needExposure);
+        cameraManager = new CameraManager(getApplication(), needExposure, needFullScreen);
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
         viewfinderView.setCameraManager(cameraManager);
+        viewfinderView.setNeedDrawText(needScanHintText);
         handler = null;
         beepManager.updatePrefs();
         if (ambientLightManager != null) {

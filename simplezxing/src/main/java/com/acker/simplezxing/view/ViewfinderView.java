@@ -20,9 +20,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Build;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -62,6 +66,7 @@ public final class ViewfinderView extends View {
     private int scannerAlpha;
     private List<ResultPoint> possibleResultPoints;
     private List<ResultPoint> lastPossibleResultPoints;
+    private boolean needDrawText;
 
     // This constructor is used when the class is built from an XML resource.
     public ViewfinderView(Context context, AttributeSet attrs) {
@@ -89,6 +94,10 @@ public final class ViewfinderView extends View {
         this.cameraManager = cameraManager;
     }
 
+    public void setNeedDrawText(boolean needDrawText) {
+        this.needDrawText = needDrawText;
+    }
+
     @SuppressLint("DrawAllocation")
     @Override
     public void onDraw(Canvas canvas) {
@@ -110,13 +119,30 @@ public final class ViewfinderView extends View {
         canvas.drawRect(frame.right + 1, frame.top, width, frame.bottom + 1, paint);
         canvas.drawRect(0, frame.bottom + 1, width, height, paint);
 
+        // Draw four corner
+        paint.setColor(laserColor);
+        canvas.drawRect(frame.left - 20, frame.top - 20, frame.left, frame.top + 60, paint);
+        canvas.drawRect(frame.left, frame.top - 20, frame.left + 60, frame.top, paint);
+        canvas.drawRect(frame.right, frame.top - 20, frame.right + 20, frame.top + 60, paint);
+        canvas.drawRect(frame.right - 60, frame.top - 20, frame.right, frame.top, paint);
+        canvas.drawRect(frame.left - 20, frame.bottom - 60, frame.left, frame.bottom + 20, paint);
+        canvas.drawRect(frame.left, frame.bottom, frame.left + 60, frame.bottom + 20, paint);
+        canvas.drawRect(frame.right, frame.bottom - 60, frame.right + 20, frame.bottom + 20, paint);
+        canvas.drawRect(frame.right - 60, frame.bottom, frame.right, frame.bottom + 20, paint);
+
+        paint.setAlpha(CURRENT_POINT_OPACITY);
+        canvas.drawLine(frame.left, frame.top, frame.right, frame.top, paint);
+        canvas.drawLine(frame.left, frame.bottom, frame.right, frame.bottom, paint);
+        canvas.drawLine(frame.left, frame.top, frame.left, frame.bottom, paint);
+        canvas.drawLine(frame.right, frame.top, frame.right, frame.bottom, paint);
+
         if (resultBitmap != null) {
             // Draw the opaque result bitmap over the scanning rectangle
             paint.setAlpha(CURRENT_POINT_OPACITY);
             canvas.drawBitmap(resultBitmap, null, frame, paint);
         } else {
             // Draw a red "laser scanner" line through the middle to show decoding is active
-            paint.setColor(laserColor);
+            paint.setColor(Color.RED);
             paint.setAlpha(SCANNER_ALPHA[scannerAlpha]);
             scannerAlpha = (scannerAlpha + 1) % SCANNER_ALPHA.length;
             int middle = frame.height() / 2 + frame.top;
@@ -157,6 +183,15 @@ public final class ViewfinderView extends View {
                 }
             }
 
+            if (needDrawText) {
+                TextPaint paint = new TextPaint();
+                paint.setColor(Color.WHITE);
+                paint.setTextSize(ViewUtil.convertSpToPixels(16, getContext()));
+                StaticLayout layout = new StaticLayout(getResources().getString(R.string.hint_scan), paint, width, Layout.Alignment.ALIGN_CENTER, 1.0F, 0.0F, false);
+                canvas.translate(0, frame.bottom + ViewUtil.convertDpToPixels(16, getContext()));
+                layout.draw(canvas);
+            }
+
             // Request another update at the animation interval, but only repaint the laser line,
             // not the entire viewfinder mask.
             postInvalidateDelayed(ANIMATION_DELAY,
@@ -165,6 +200,8 @@ public final class ViewfinderView extends View {
                     frame.right + POINT_SIZE,
                     frame.bottom + POINT_SIZE);
         }
+
+
     }
 
     public void drawViewfinder() {

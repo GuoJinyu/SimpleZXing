@@ -47,8 +47,10 @@ public final class CameraManager {
 
     private static final int MIN_FRAME_WIDTH = 240;
     private static final int MIN_FRAME_HEIGHT = 240;
-    private static final int MAX_FRAME_WIDTH = 1200; // = 5/8 * 1920
-    private static final int MAX_FRAME_HEIGHT = 675; // = 5/8 * 1080
+    //    private static final int MAX_FRAME_WIDTH = 1200; // = 5/8 * 1920
+//    private static final int MAX_FRAME_HEIGHT = 675; // = 5/8 * 1080
+    private static final int MAX_FRAME_WIDTH = 1920; // = 3/4 * 2560
+    private static final int MAX_FRAME_HEIGHT = 1080; // = 3/4 * 1440
 
     private final CameraConfigurationManager configManager;
     /**
@@ -64,14 +66,17 @@ public final class CameraManager {
     private boolean previewing;
     private int requestedFramingRectWidth;
     private int requestedFramingRectHeight;
+    private boolean needFullScreen;
 
-    public CameraManager(Context context, boolean needExposure) {
+    public CameraManager(Context context, boolean needExposure, boolean needFullScreen) {
         this.configManager = new CameraConfigurationManager(context, needExposure);
         previewCallback = new PreviewCallback(configManager);
+        this.needFullScreen = needFullScreen;
     }
 
     private static int findDesiredDimensionInRange(int resolution, int hardMin, int hardMax) {
-        int dim = 5 * resolution / 8; // Target 5/8 of each dimension
+        //int dim = 5 * resolution / 8; // Target 5/8 of each dimension
+        int dim = 3 * resolution / 4; // Target 3/4 of each dimension
         if (dim < hardMin) {
             return hardMin;
         }
@@ -237,7 +242,9 @@ public final class CameraManager {
 
             int width = findDesiredDimensionInRange(screenResolution.x, MIN_FRAME_WIDTH, MAX_FRAME_WIDTH);
             int height = findDesiredDimensionInRange(screenResolution.y, MIN_FRAME_HEIGHT, MAX_FRAME_HEIGHT);
-
+            if (width < height) {
+                height = width;
+            }
             int leftOffset = (screenResolution.x - width) / 2;
             int topOffset = (screenResolution.y - height) / 2;
             framingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
@@ -321,13 +328,17 @@ public final class CameraManager {
      * @return A PlanarYUVLuminanceSource instance.
      */
     public PlanarYUVLuminanceSource buildLuminanceSource(byte[] data, int width, int height) {
-        Rect rect = getFramingRectInPreview();
-        if (rect == null) {
-            return null;
+        if (needFullScreen) {
+            return new PlanarYUVLuminanceSource(data, width, height, 0, 0, width, height, false);
+        } else {
+            Rect rect = getFramingRectInPreview();
+            if (rect == null) {
+                return null;
+            }
+            // Go ahead and assume it's YUV rather than die.
+            return new PlanarYUVLuminanceSource(data, width, height, rect.left, rect.top,
+                    rect.width(), rect.height(), false);
         }
-        // Go ahead and assume it's YUV rather than die.
-        return new PlanarYUVLuminanceSource(data, width, height, rect.left, rect.top,
-                rect.width(), rect.height(), false);
     }
 
 }
