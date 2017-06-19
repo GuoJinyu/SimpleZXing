@@ -9,7 +9,7 @@ In most cases, this library can be easily used by just two steps:
 
 * 1. add dependencies  
 ```gradle
-    compile 'com.acker:simplezxing:1.3'
+    compile 'com.acker:simplezxing:1.4'
 ```
 
 * 2. invoke it  
@@ -78,8 +78,9 @@ public class MainActivity extends AppCompatActivity {
         bundle.putBoolean(CaptureActivity.KEY_NEED_EXPOSURE, CaptureActivity.VALUE_NO_EXPOSURE);
         bundle.putByte(CaptureActivity.KEY_FLASHLIGHT_MODE, CaptureActivity.VALUE_FLASHLIGHT_OFF);
         bundle.putByte(CaptureActivity.KEY_ORIENTATION_MODE, CaptureActivity.VALUE_ORIENTATION_AUTO);
-        intent.putExtra(CaptureActivity.EXTRA_SETTING_BUNDLE, bundle);
-        startActivityForResult(intent, CaptureActivity.REQ_CODE);
+        bundle.putBoolean(CaptureActivity.KEY_SCAN_AREA_FULL_SCREEN, CaptureActivity.VALUE_SCAN_AREA_FULL_SCREEN);
+        bundle.putBoolean(CaptureActivity.KEY_NEED_SCAN_HINT_TEXT, CaptureActivity.VALUE_SCAN_HINT_TEXT);
+        intent.putExtra(CaptureActivity.EXTRA_SETTING_BUNDLE, bundle);        startActivityForResult(intent, CaptureActivity.REQ_CODE);
     }
 
     @Override
