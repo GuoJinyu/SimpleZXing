@@ -27,7 +27,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    //compile project(':simplezxing')
-    compile 'com.acker:simplezxing:1.4'
+    compile project(':simplezxing')
+    //compile 'com.acker:simplezxing:1.4'
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
 }
