@@ -67,6 +67,7 @@ public final class ViewfinderView extends View {
     private List<ResultPoint> possibleResultPoints;
     private List<ResultPoint> lastPossibleResultPoints;
     private boolean needDrawText;
+    private boolean fullScreen;
 
     // This constructor is used when the class is built from an XML resource.
     public ViewfinderView(Context context, AttributeSet attrs) {
@@ -96,6 +97,10 @@ public final class ViewfinderView extends View {
 
     public void setNeedDrawText(boolean needDrawText) {
         this.needDrawText = needDrawText;
+    }
+
+    public void setScanAreaFullScreen(boolean fullScreen) {
+        this.fullScreen = fullScreen;
     }
 
     @SuppressLint("DrawAllocation")
@@ -164,9 +169,14 @@ public final class ViewfinderView extends View {
                 paint.setColor(resultPointColor);
                 synchronized (currentPossible) {
                     for (ResultPoint point : currentPossible) {
-                        canvas.drawCircle(frameLeft + (int) (point.getX() * scaleX),
-                                frameTop + (int) (point.getY() * scaleY),
-                                POINT_SIZE, paint);
+                        if (fullScreen)
+                            canvas.drawCircle((int) (point.getX() * scaleX),
+                                    (int) (point.getY() * scaleY),
+                                    POINT_SIZE, paint);
+                        else
+                            canvas.drawCircle(frameLeft + (int) (point.getX() * scaleX),
+                                    frameTop + (int) (point.getY() * scaleY),
+                                    POINT_SIZE, paint);
                     }
                 }
             }
@@ -176,9 +186,14 @@ public final class ViewfinderView extends View {
                 synchronized (currentLast) {
                     float radius = POINT_SIZE / 2.0f;
                     for (ResultPoint point : currentLast) {
-                        canvas.drawCircle(frameLeft + (int) (point.getX() * scaleX),
-                                frameTop + (int) (point.getY() * scaleY),
-                                radius, paint);
+                        if (fullScreen)
+                            canvas.drawCircle((int) (point.getX() * scaleX),
+                                    (int) (point.getY() * scaleY),
+                                    radius, paint);
+                        else
+                            canvas.drawCircle(frameLeft + (int) (point.getX() * scaleX),
+                                    frameTop + (int) (point.getY() * scaleY),
+                                    radius, paint);
                     }
                 }
             }

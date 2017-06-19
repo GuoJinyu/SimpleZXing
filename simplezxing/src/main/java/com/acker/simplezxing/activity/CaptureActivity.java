@@ -174,15 +174,16 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             myOrientationDetector.enable();
         }
         cameraManager = new CameraManager(getApplication(), needExposure, needFullScreen);
-        viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
+        viewfinderView = findViewById(R.id.viewfinder_view);
         viewfinderView.setCameraManager(cameraManager);
         viewfinderView.setNeedDrawText(needScanHintText);
+        viewfinderView.setScanAreaFullScreen(needFullScreen);
         handler = null;
         beepManager.updatePrefs();
         if (ambientLightManager != null) {
             ambientLightManager.start(cameraManager);
         }
-        SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
+        SurfaceView surfaceView = findViewById(R.id.preview_view);
         SurfaceHolder surfaceHolder = surfaceView.getHolder();
         if (hasSurface) {
             // The activity was paused but not stopped, so the surface still exists. Therefore

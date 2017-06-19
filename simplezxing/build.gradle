@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-version = "1.4"
+version = "1.5"
 group = "com.acker"
 
 android {
@@ -9,7 +9,7 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 5
+        versionCode 6
         versionName version
     }
 
