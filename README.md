@@ -9,7 +9,7 @@ In most cases, this library can be easily used by just two steps:
 
 * 1. add dependencies  
 ```gradle
-    compile 'com.acker:simplezxing:1.4'
+    compile 'com.acker:simplezxing:1.5'
 ```
 
 * 2. invoke it  
@@ -123,4 +123,4 @@ public class MainActivity extends AppCompatActivity {
 
 ```
 ## Effect  
-![Scanner UI](http://obc3atr48.bkt.clouddn.com/new%20image%20-%20vtj52.jpg)
+![Scanner UI](http://obc3atr48.bkt.clouddn.com/WechatIMG22.jpeg)
